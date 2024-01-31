@@ -23,7 +23,9 @@ function genatareFrom(){
     return from;
 }
 var form_ex = genatareFrom();
-document.getElementById("form-display").innerHTML += form_ex;
+if (form_ex != null) {
+  document.getElementById("form-display").innerHTML += form_ex;
+}
 
   // ES10+
 const form = document.getElementById('from-action');
@@ -57,4 +59,40 @@ form.addEventListener('submit', function (event) {
     }
   });
 
+});
+
+const xhr = new XMLHttpRequest();
+xhr.open("POST", "https://jsonplaceholder.typicode.com/posts");
+xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+const body = JSON.stringify({
+  title: "Hello World",
+  body: "My POST request",
+  userId: 900,
+});
+xhr.onload = () => {
+  if (xhr.readyState == 4 && xhr.status == 201) {
+    console.log(JSON.parse(xhr.responseText));
+  } else {
+    console.log(`Error: ${xhr.status}`);
+  }
+};
+xhr.send(body);
+
+fetch('https://jsonplaceholder.typicode.com/posts', {
+	method: 'POST'
+}).then(function (response) {
+	// The API call was successful!
+	if (response.ok) {
+    console.log(JSON.parse(xhr.responseText));
+		return response.json();
+	} else {
+		return Promise.reject(response);
+	}
+}).then(function (data) {
+	// This is the JSON from our response
+	console.log(data);
+  console.log("ok--")
+}).catch(function (err) {
+	// There was an error
+	console.warn('Something went wrong.', err);
 });
