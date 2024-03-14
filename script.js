@@ -117,11 +117,16 @@ xhr.onload = () => {
     //console.log(posts);
     const obj = JSON.parse(posts);
     console.log(obj);
+    
     obj.forEach(function(data) {  
-      outputElement.innerHTML += `<p> ID:  ${data.id}</p>`;
-      outputElement.innerHTML += `<p> Title: ${data.title}</p>`;
-      outputElement.innerHTML += `<p> Body: ${data.body}</p>`;
+      outputElement.innerHTML += `<div class="col-md-3 text-dark bg-light p-3 border border-primary"><div class="card" style="width: 18rem;">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Title: ${data.title}</li>
+        <li class="list-group-item">Body: ${data.body}</li>
+      </ul>
+    </div></div>`;
     }); 
+    
     
   }).catch(function (err) {
     // There was an error

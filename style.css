@@ -14,6 +14,11 @@ body{
       background-color: lightblue;
     }
   }
+  @media only screen and (max-width: 1920px) {
+    body {
+      background-color: rgb(128, 98, 199);
+    }
+  }
 
 .digi-input{
     width: 100%;
