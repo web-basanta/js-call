@@ -23,12 +23,23 @@ function genatareFrom(){
     return from;
 }
 var form_ex = genatareFrom();
+let forms = document.getElementById("form-display").innerHTML;
 if (form_ex != null) {
-  document.getElementById("form-display").innerHTML += form_ex;
+  forms += form_ex;
 }
 
   // ES10+
 const form = document.getElementById('from-action');
+
+function genatareFroms() {
+
+}
+
+try {
+ 
+  if(form == null) {
+    console.log('form is null');
+  }else {
 
 form.addEventListener('submit', function (event) {
   document.getElementById("alert").innerHTML +='';
@@ -60,6 +71,12 @@ form.addEventListener('submit', function (event) {
   });
 
 });
+  }
+} catch (error) {
+  console.error(error);
+  // Expected output: ReferenceError: nonExistentFunction is not defined
+  // (Note: the exact output may be browser-dependent)
+}
 
 const xhr = new XMLHttpRequest();
 xhr.open("POST", "https://jsonplaceholder.typicode.com/posts");
@@ -70,29 +87,55 @@ const body = JSON.stringify({
   userId: 900,
 });
 xhr.onload = () => {
-  if (xhr.readyState == 4 && xhr.status == 201) {
-    console.log(JSON.parse(xhr.responseText));
-  } else {
-    console.log(`Error: ${xhr.status}`);
-  }
+  // if (xhr.readyState == 4 && xhr.status == 201) {
+  //   console.log(JSON.parse(xhr.responseText));
+  // } else {
+  //   console.log(`Error: ${xhr.status}`);
+  // }
+
+  //
+  window.addEventListener("", (event) => {
+    console.log("ok--")
+});
+
+  fetch('https://jsonplaceholder.typicode.com/posts', {
+	//method: 'GET'
+  }).then(function (response) {
+    // The API call was successful!
+    //console.log(response.json());
+    if (response.ok) {
+      //console.log(JSON.parse(xhr.responseText));
+      return response.json();
+    } else {
+      return Promise.reject(response);
+    }
+  }).then(function (data) {
+    // This is the JSON from our response
+    const outputElement = document.getElementById('posts');
+    const posts = JSON.stringify((data));
+    
+    //console.log(posts);
+    const obj = JSON.parse(posts);
+    console.log(obj);
+    obj.forEach(function(data) {  
+      outputElement.innerHTML += `<p> ID:  ${data.id}</p>`;
+      outputElement.innerHTML += `<p> Title: ${data.title}</p>`;
+      outputElement.innerHTML += `<p> Body: ${data.body}</p>`;
+    }); 
+    
+  }).catch(function (err) {
+    // There was an error
+    console.warn('Something went wrong.', err);
+  });
 };
+
 xhr.send(body);
 
-fetch('https://jsonplaceholder.typicode.com/posts', {
-	method: 'POST'
-}).then(function (response) {
-	// The API call was successful!
-	if (response.ok) {
-    console.log(JSON.parse(xhr.responseText));
-		return response.json();
-	} else {
-		return Promise.reject(response);
-	}
-}).then(function (data) {
-	// This is the JSON from our response
-	console.log(data);
-  console.log("ok--")
-}).catch(function (err) {
-	// There was an error
-	console.warn('Something went wrong.', err);
-});
+
+// fetch('https://jsonplaceholder.typicode.com/posts').then(function (response) {
+// 	// The API call was successful!
+// 	//console.log(response);
+// }).catch(function (error) {
+// 	// There was an error
+// 	console.warn(error);
+// });
