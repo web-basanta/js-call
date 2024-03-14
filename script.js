@@ -70,29 +70,36 @@ const body = JSON.stringify({
   userId: 900,
 });
 xhr.onload = () => {
-  if (xhr.readyState == 4 && xhr.status == 201) {
-    console.log(JSON.parse(xhr.responseText));
-  } else {
-    console.log(`Error: ${xhr.status}`);
-  }
+  // if (xhr.readyState == 4 && xhr.status == 201) {
+  //   console.log(JSON.parse(xhr.responseText));
+  // } else {
+  //   console.log(`Error: ${xhr.status}`);
+  // }
+
+  //
+  window.addEventListener("", (event) => {
+    console.log("ok--")
+});
+  fetch('https://jsonplaceholder.typicode.com/posts', {
+	method: 'POST'
+  }).then(function (response) {
+    // The API call was successful!
+    if (response.ok) {
+      console.log(JSON.parse(xhr.responseText));
+      return response.json();
+    } else {
+      return Promise.reject(response);
+    }
+  }).then(function (data) {
+    // This is the JSON from our response
+
+    console.log(data);
+    
+  }).catch(function (err) {
+    // There was an error
+    console.warn('Something went wrong.', err);
+  });
 };
+
 xhr.send(body);
 
-fetch('https://jsonplaceholder.typicode.com/posts', {
-	method: 'POST'
-}).then(function (response) {
-	// The API call was successful!
-	if (response.ok) {
-    console.log(JSON.parse(xhr.responseText));
-		return response.json();
-	} else {
-		return Promise.reject(response);
-	}
-}).then(function (data) {
-	// This is the JSON from our response
-	console.log(data);
-  console.log("ok--")
-}).catch(function (err) {
-	// There was an error
-	console.warn('Something went wrong.', err);
-});
